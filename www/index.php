@@ -66,7 +66,7 @@ if ($result === FALSE) {
     <title>To-Do List</title>
     <style>
         body {
-            font-family: monospace;
+            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             display: flex;
             justify-content: center;
@@ -143,39 +143,24 @@ if ($result === FALSE) {
         }
 
         .task a {
-            padding: 10px 15px;
+            padding: 10px;
             border-radius: 5px;
             text-decoration: none;
             color: white;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .task a.complete {
-            background-color: #5cb85c;
-        }
-
-        .task a.complete:hover {
-            background-color: #4cae4c;
-        }
-
-        .task a.delete {
-            background-color: #d9534f;
-        }
-
-        .task a.delete:hover {
-            background-color: #c9302c;
-        }
-
-        .task a.edit {
-            background-color: #0275d8;
-        }
-
-        .task a.edit:hover {
-            background-color: #025aa5;
+        .task a img {
+            width: 20px;
+            height: 20px;
         }
 
         .edit-form {
             display: none;
+            flex-direction: column;
         }
 
         .edit-form input[type="text"] {
@@ -188,17 +173,21 @@ if ($result === FALSE) {
             padding: 10px 20px;
             font-size: 16px;
         }
+
+        .update-button {
+            margin: 10px 0 0 0;
+        }
     </style>
     <script>
         function toggleEditForm(taskId) {
             var form = document.getElementById('edit-form-' + taskId);
             var text = document.getElementById('task-text-' + taskId);
             if (form.style.display === 'none') {
-                form.style.display = 'inline';
+                form.style.display = 'flex';
                 text.style.display = 'none';
             } else {
                 form.style.display = 'none';
-                text.style.display = 'inline';
+                text.style.display = 'flex';
             }
         }
     </script>
@@ -219,14 +208,20 @@ if ($result === FALSE) {
                     <form method="POST" class="edit-form" id="edit-form-<?php echo $row['id']; ?>">
                         <input type="hidden" name="task_id" value="<?php echo $row['id']; ?>">
                         <input type="text" name="new_title" value="<?php echo htmlspecialchars($row['title']); ?>" required>
-                        <button type="submit" name="edit_task">Update</button>
+                        <button class="update-button" type="submit" name="edit_task">Update</button>
                     </form>
                     <div>
                         <?php if (!$row['completed']): ?>
-                            <a class="complete" href="?complete_task=<?php echo $row['id']; ?>">Complete</a>
+                            <a class="complete" href="?complete_task=<?php echo $row['id']; ?>">
+                                <img src="img/verificar.png" alt="Complete">
+                            </a>
                         <?php endif; ?>
-                        <a class="delete" href="?delete_task=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
-                        <a class="edit" href="javascript:void(0);" onclick="toggleEditForm(<?php echo $row['id']; ?>)">Edit</a>
+                        <a class="delete" href="?delete_task=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this task?');">
+                            <img src="img/lixeira-xmark.png" alt="Delete">
+                        </a>
+                        <a class="edit" href="javascript:void(0);" onclick="toggleEditForm(<?php echo $row['id']; ?>)">
+                            <img src="img/lapis.png" alt="Edit">
+                        </a>
                     </div>
                 </li>
             <?php endwhile; ?>
