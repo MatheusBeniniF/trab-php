@@ -70,9 +70,23 @@ if ($result === FALSE) {
             background-color: #f5f5f5;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             height: 100vh;
             margin: 0;
+            padding-top: 160px;
+        }
+
+        header {
+            position: fixed; 
+            top: 0;          
+            left: 0;
+            right: 0;
+            width: 100%;     
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;   
+            padding: 20px 0; 
+            text-align: center;
         }
 
         h1 {
@@ -80,6 +94,7 @@ if ($result === FALSE) {
             font-family: fantasy;
             text-align: center;
             font-size: 55px;
+            margin: 0;
         }
 
         form {
@@ -116,6 +131,7 @@ if ($result === FALSE) {
             list-style-type: none;
             padding: 0;
             width: 80%;
+            margin-top: 60px;
         }
 
         li.task {
@@ -194,11 +210,13 @@ if ($result === FALSE) {
 </head>
 <body>
     <div>
-        <h1>To-Do List</h1>
-        <form method="POST">
-            <input type="text" name="title" placeholder="Add a new task" required>
-            <button type="submit" name="add_task">Add</button>
-        </form>
+        <header>
+            <h1>To-Do List</h1>
+            <form method="POST">
+                <input type="text" name="title" placeholder="Add a new task" required>
+                <button type="submit" name="add_task">Add</button>
+            </form>
+        </header>
         <ul>
             <?php while($row = $result->fetch_assoc()): ?>
                 <li class="task <?php echo $row['completed'] ? 'completed' : ''; ?>">
